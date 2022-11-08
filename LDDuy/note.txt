@@ -1,1 +1,2 @@
 Combine two table: https://leetcode.com/problems/combine-two-tables/
+Capital gainloss: https://leetcode.com/problems/capital-gainloss/
