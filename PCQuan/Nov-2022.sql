@@ -72,19 +72,17 @@ ORDER BY id
 =====================================
 ### [1398. Customers Who Bought Products A and B but Not C](https://leetcode.com/problems/customers-who-bought-products-a-and-b-but-not-c/)
 Date: 10/11/2022
-
-!!!! Chưa xong. Tìm REGEX đúng là ok
 */
 SELECT c.customer_id, c.customer_name
 FROM Customers c
 JOIN (
     SELECT 
         customer_id, 
-        REPLACE(GROUP_CONCAT(product_name), ',','') AS product_name  
+        GROUP_CONCAT(product_name) AS product_name  
     FROM Orders 
     GROUP BY customer_id
 ) as o ON c.customer_id = o.customer_id
-WHERE o.product_name REGEXP '[[:>:]]AB[^C][[:>:]]'
+WHERE o.product_name REGEXP '^[^C]*$' AND o.product_name REGEXP 'A' AND o.product_name REGEXP 'B'
 -- =====================================
 
 
