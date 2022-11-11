@@ -83,7 +83,73 @@ JOIN (
     GROUP BY customer_id
 ) as o ON c.customer_id = o.customer_id
 WHERE o.product_name REGEXP '^[^C]*$' AND o.product_name REGEXP 'A' AND o.product_name REGEXP 'B'
+
+-- Cac cach tham khao cua anh DVHung
+SELECT
+  c.customer_id,
+  c.customer_name
+FROM
+  Customers c
+  INNER JOIN Orders o ON c.customer_id = o.customer_id
+GROUP BY
+  c.customer_id
+HAVING
+  SUM(o.product_name = 'C') = 0
+  AND SUM(o.product_name = 'A') > 0
+  AND SUM(o.product_name = 'B') > 0
+ORDER BY
+  c.customer_id
+
+SELECT
+  c.customer_id,
+  c.customer_name
+FROM
+  Customers c
+  JOIN Orders a ON a.customer_id = c.customer_id
+  AND a.product_name = "A"
+  JOIN Orders b ON b.customer_id = c.customer_id
+  AND b.product_name = "B"
+  LEFT OUTER JOIN Orders o on o.customer_id = c.customer_id
+  AND o.product_name = "C"
+WHERE
+  o.order_id IS NUL
+
+SELECT
+  DISTINCT b.customer_id,
+  b.customer_name
+FROM
+  Orders a
+  JOIN Customers b ON a.customer_id = b.customer_id
+WHERE
+  a.customer_id NOT IN (
+    select
+      customer_id
+    FROM
+      Orders
+    WHERE
+      product_name = 'C'
+  )
+  AND a.customer_id IN (
+    SELECT
+      customer_id
+    FROM
+      Orders
+    WHERE
+      product_name = 'A'
+  )
+  AND a.customer_id IN (
+    SELECT
+      customer_id
+    FROM
+      Orders
+    WHERE
+      product_name = 'B'
+  )
+ORDER BY
+  1
+
 -- =====================================
+
 
 
 
