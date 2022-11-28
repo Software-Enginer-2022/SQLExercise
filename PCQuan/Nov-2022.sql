@@ -140,7 +140,7 @@ ORDER BY 1
 /*
 =====================================
 ### [1484. Group Sold Products By The Date](https://leetcode.com/problems/group-sold-products-by-the-date/)
-Date: 10/11/2022
+Date: 28/11/2022
 */
 SELECT 
     sell_date, 
@@ -149,6 +149,19 @@ SELECT
 FROM Activities
 GROUP BY sell_date
 ORDER BY sell_date ASC
+-- =====================================
+
+/*
+=====================================
+### [176. Second Highest Salary](https://leetcode.com/problems/second-highest-salary/)
+Date: 128/11/2022
+*/
+SELECT (
+    SELECT DISTINCT(Salary) FROM Employee
+LIMIT 1 
+offset 1
+) AS SecondHighestSalary 
+
 -- =====================================
 
 
